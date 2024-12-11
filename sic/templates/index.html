@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Equipo</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-6">Buscar Equipo</h2>
+
+    <form method="POST" action="{% url 'search_team' %}" class="mb-6">
+        {% csrf_token %}
+        <label for="team_name" class="block text-gray-600 font-medium">Ingresa el nombre del equipo:</label>
+        <input type="text" id="team_name" name="team_name" class="mt-2 p-2 border border-gray-300 rounded-lg w-full" required>
+        <button type="submit" class="mt-4 p-2 bg-blue-600 text-white rounded-lg w-full">Buscar</button>
+    </form>
+
+    {% if team_data.team_id %}
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">Resultado de la búsqueda:</h3>
+
+    <table class="min-w-full table-auto">
+        <thead>
+            <tr>
+                <th class="px-4 py-2 text-left text-gray-600">Nombre del Equipo</th>
+                <th class="px-4 py-2 text-left text-gray-600">ID</th>
+                <th class="px-4 py-2 text-left text-gray-600">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="px-4 py-2 text-gray-700">{{ team_name }}</td>
+                <td class="px-4 py-2 text-gray-700">{{ team_data.team_id }}</td>
+                <td class="px-4 py-2">
+                    <a href="{% url 'plantilla_team' nombre_equipo=team_name id_equipo=team_data.team_id %}" class="text-blue-600 hover:text-blue-800">Ver plantilla</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+</body>
+</html>
